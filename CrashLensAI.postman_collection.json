@@ -1,0 +1,212 @@
+{
+  "info": {
+    "name": "CrashLensAI API",
+    "description": "API collection for testing CrashLensAI crash reporting and incident retrieval",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Report Crash - Undefined Error",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response has explanation field\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('explanation');",
+              "});",
+              "",
+              "pm.test(\"Response has suggestedFix field\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('suggestedFix');",
+              "});",
+              "",
+              "pm.test(\"Response has timestamp field\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('timestamp');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"endpoint\": \"/api/users/profile\",\n  \"statusCode\": 500,\n  \"errorMessage\": \"Cannot read property 'id' of undefined\",\n  \"requestBody\": {\n    \"userId\": \"12345\"\n  }\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3001/api/report-crash",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["api", "report-crash"]
+        },
+        "description": "Report a crash with an undefined property error"
+      },
+      "response": []
+    },
+    {
+      "name": "Report Crash - Timeout Error",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response has explanation field\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('explanation');",
+              "});",
+              "",
+              "pm.test(\"Response has suggestedFix field\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('suggestedFix');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"endpoint\": \"/api/external-service\",\n  \"statusCode\": 504,\n  \"errorMessage\": \"Request timed out after 30 seconds\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3001/api/report-crash",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["api", "report-crash"]
+        },
+        "description": "Report a crash with a timeout error"
+      },
+      "response": []
+    },
+    {
+      "name": "Report Crash - Connection Error",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response has explanation field\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('explanation');",
+              "});",
+              "",
+              "pm.test(\"Response has suggestedFix field\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('suggestedFix');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"endpoint\": \"/api/database/connect\",\n  \"statusCode\": 500,\n  \"errorMessage\": \"Connection refused ECONNREFUSED 127.0.0.1:5432\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3001/api/report-crash",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["api", "report-crash"]
+        },
+        "description": "Report a crash with a database connection error"
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Incidents",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/api/incidents",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["api", "incidents"]
+        },
+        "description": "Retrieve all incidents from Sanity (10 most recent)"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Incidents with Limit",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/api/incidents?limit=5",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["api", "incidents"],
+          "query": [
+            {
+              "key": "limit",
+              "value": "5"
+            }
+          ]
+        },
+        "description": "Retrieve a limited number of incidents"
+      },
+      "response": []
+    },
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["health"]
+        },
+        "description": "Check if the backend server is running"
+      },
+      "response": []
+    }
+  ]
+}

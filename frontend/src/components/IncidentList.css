@@ -1,0 +1,27 @@
+.incident-list {
+  width: 100%;
+}
+
+.incident-count {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  color: #94a3b8;
+}
+
+.incident-count span {
+  color: #667eea;
+  font-weight: bold;
+  font-size: 1.4rem;
+}
+
+.incidents-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+}
+
+@media (max-width: 768px) {
+  .incidents-grid {
+    grid-template-columns: 1fr;
+  }
+}

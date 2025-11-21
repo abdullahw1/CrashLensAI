@@ -1,0 +1,123 @@
+.incident-card {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.incident-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border-color: #667eea;
+}
+
+.incident-card.latest {
+  border: 2px solid #667eea;
+  background: linear-gradient(135deg, #1e293b 0%, #2d1b4e 100%);
+  box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+}
+
+.latest-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #667eea;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.85rem;
+  font-weight: bold;
+  z-index: 2;
+}
+
+.severity-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: #0f172a;
+  border: 2px solid;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.85rem;
+  font-weight: bold;
+  z-index: 2;
+}
+
+.incident-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.endpoint {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  font-family: 'Courier New', monospace;
+  flex: 1;
+}
+
+.status-code {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.incident-error {
+  background: #0f172a;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  border-left: 3px solid #ef4444;
+  color: #fca5a5;
+}
+
+.incident-error strong {
+  color: #ef4444;
+  margin-right: 0.5rem;
+}
+
+.incident-section {
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #94a3b8;
+  margin-bottom: 0.5rem;
+}
+
+.section-content {
+  color: #cbd5e1;
+  line-height: 1.6;
+  padding: 0.75rem;
+  background: #0f172a;
+  border-radius: 0.5rem;
+}
+
+.section-content.fix {
+  border-left: 3px solid #10b981;
+  color: #86efac;
+}
+
+.incident-footer {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #334155;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.timestamp {
+  color: #64748b;
+  font-size: 0.9rem;
+}
