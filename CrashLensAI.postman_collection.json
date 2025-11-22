@@ -6,7 +6,10 @@
   },
   "item": [
     {
-      "name": "Report Crash - Undefined Error",
+      "name": "Single Crash Scenarios",
+      "item": [
+        {
+          "name": "Report Crash - Undefined Error",
       "event": [
         {
           "listen": "test",
@@ -153,6 +156,232 @@
         "description": "Report a crash with a database connection error"
       },
       "response": []
+        },
+        {
+          "name": "Report Crash - Auth Failure",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"endpoint\": \"/api/auth/login\",\n  \"statusCode\": 401,\n  \"errorMessage\": \"Invalid credentials\",\n  \"stackTrace\": \"at AuthService.validateCredentials (/app/auth.js:23:10)\",\n  \"requestBody\": {\n    \"email\": \"user@example.com\"\n  }\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/report-crash",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["api", "report-crash"]
+            },
+            "description": "Report a crash with authentication failure"
+          },
+          "response": []
+        },
+        {
+          "name": "Report Crash - Null Pointer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"endpoint\": \"/api/orders/create\",\n  \"statusCode\": 500,\n  \"errorMessage\": \"Cannot read property 'total' of null\",\n  \"stackTrace\": \"at OrderService.calculateTotal (/app/orders.js:45:12)\\n    at OrderController.create (/app/controllers/orders.js:18:5)\",\n  \"requestBody\": {\n    \"items\": []\n  }\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/report-crash",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["api", "report-crash"]
+            },
+            "description": "Report a crash with null pointer exception"
+          },
+          "response": []
+        },
+        {
+          "name": "Report Crash - Memory Error",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"endpoint\": \"/api/reports/generate\",\n  \"statusCode\": 500,\n  \"errorMessage\": \"JavaScript heap out of memory\",\n  \"stackTrace\": \"FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/report-crash",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["api", "report-crash"]
+            },
+            "description": "Report a crash with memory error"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Rapid-Fire Pattern Detection",
+      "item": [
+        {
+          "name": "Login Crash 1",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"endpoint\": \"/api/login\",\n  \"statusCode\": 500,\n  \"errorMessage\": \"Cannot read property 'id' of undefined\",\n  \"stackTrace\": \"at login (/app/auth.js:45:12)\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/report-crash",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["api", "report-crash"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login Crash 2",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"endpoint\": \"/api/login\",\n  \"statusCode\": 500,\n  \"errorMessage\": \"Cannot read property 'id' of undefined\",\n  \"stackTrace\": \"at login (/app/auth.js:45:12)\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/report-crash",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["api", "report-crash"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login Crash 3",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"endpoint\": \"/api/login\",\n  \"statusCode\": 500,\n  \"errorMessage\": \"Cannot read property 'id' of undefined\",\n  \"stackTrace\": \"at login (/app/auth.js:45:12)\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/report-crash",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["api", "report-crash"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login Crash 4",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"endpoint\": \"/api/login\",\n  \"statusCode\": 500,\n  \"errorMessage\": \"Cannot read property 'id' of undefined\",\n  \"stackTrace\": \"at login (/app/auth.js:45:12)\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/report-crash",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["api", "report-crash"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login Crash 5",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"endpoint\": \"/api/login\",\n  \"statusCode\": 500,\n  \"errorMessage\": \"Cannot read property 'id' of undefined\",\n  \"stackTrace\": \"at login (/app/auth.js:45:12)\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/report-crash",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["api", "report-crash"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login Crash 6",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"endpoint\": \"/api/login\",\n  \"statusCode\": 500,\n  \"errorMessage\": \"Cannot read property 'id' of undefined\",\n  \"stackTrace\": \"at login (/app/auth.js:45:12)\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/report-crash",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["api", "report-crash"]
+            }
+          },
+          "response": []
+        }
+      ]
     },
     {
       "name": "Get All Incidents",
@@ -189,6 +418,38 @@
           ]
         },
         "description": "Retrieve a limited number of incidents"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Patterns",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/api/patterns",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["api", "patterns"]
+        },
+        "description": "Retrieve detected patterns"
+      },
+      "response": []
+    },
+    {
+      "name": "Agent Activity Stream (SSE)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/api/agent-activity",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["api", "agent-activity"]
+        },
+        "description": "Connect to Server-Sent Events stream for live agent activity"
       },
       "response": []
     },

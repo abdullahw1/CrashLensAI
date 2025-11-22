@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SSE Test - Agent Activity</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        #status {
+            padding: 10px;
+            margin: 20px 0;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        #status.connected {
+            background: #4CAF50;
+            color: white;
+        }
+        #status.disconnected {
+            background: #f44336;
+            color: white;
+        }
+        #activities {
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 5px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .activity {
+            padding: 10px;
+            margin: 10px 0;
+            background: #3a3a3a;
+            border-left: 4px solid #4CAF50;
+            border-radius: 3px;
+        }
+        .agent {
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        .timestamp {
+            color: #888;
+            font-size: 0.9em;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>🤖 Agent Activity Stream Test</h1>
+    
+    <div id="status" class="disconnected">Disconnected</div>
+    
+    <button onclick="connect()">Connect</button>
+    <button onclick="disconnect()">Disconnect</button>
+    <button onclick="sendTestCrash()">Send Test Crash</button>
+    <button onclick="clearActivities()">Clear</button>
+    
+    <h2>Live Activity Feed:</h2>
+    <div id="activities"></div>
+
+    <script>
+        let eventSource = null;
+        let activityCount = 0;
+
+        function connect() {
+            if (eventSource) {
+                console.log('Already connected');
+                return;
+            }
+
+            console.log('Connecting to SSE endpoint...');
+            eventSource = new EventSource('http://localhost:3001/api/agent-activity');
+
+            eventSource.onopen = () => {
+                console.log('SSE connection opened');
+                document.getElementById('status').textContent = 'Connected';
+                document.getElementById('status').className = 'connected';
+            };
+
+            eventSource.onmessage = (event) => {
+                console.log('Received event:', event.data);
+                try {
+                    const data = JSON.parse(event.data);
+                    addActivity(data);
+                } catch (error) {
+                    console.error('Error parsing event data:', error);
+                }
+            };
+
+            eventSource.onerror = (error) => {
+                console.error('SSE error:', error);
+                document.getElementById('status').textContent = 'Disconnected (Error)';
+                document.getElementById('status').className = 'disconnected';
+                eventSource.close();
+                eventSource = null;
+            };
+        }
+
+        function disconnect() {
+            if (eventSource) {
+                eventSource.close();
+                eventSource = null;
+                document.getElementById('status').textContent = 'Disconnected';
+                document.getElementById('status').className = 'disconnected';
+                console.log('Disconnected');
+            }
+        }
+
+        function addActivity(data) {
+            activityCount++;
+            const container = document.getElementById('activities');
+            const activity = document.createElement('div');
+            activity.className = 'activity';
+            activity.innerHTML = `
+                <div class="agent">${data.agent}</div>
+                <div>${data.action}</div>
+                <div class="timestamp">${new Date(data.timestamp).toLocaleString()}</div>
+            `;
+            container.insertBefore(activity, container.firstChild);
+            
+            // Keep only last 50 activities
+            while (container.children.length > 50) {
+                container.removeChild(container.lastChild);
+            }
+        }
+
+        function clearActivities() {
+            document.getElementById('activities').innerHTML = '';
+            activityCount = 0;
+        }
+
+        async function sendTestCrash() {
+            try {
+                const response = await fetch('http://localhost:3001/api/report-crash', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        endpoint: '/api/test/sse',
+                        statusCode: 500,
+                        errorMessage: 'Test crash from SSE test page',
+                        stackTrace: 'at testFunction (/app/test.js:10:5)'
+                    })
+                });
+                const data = await response.json();
+                console.log('Crash sent:', data);
+                alert('Test crash sent! Watch the activity feed.');
+            } catch (error) {
+                console.error('Error sending crash:', error);
+                alert('Error sending crash: ' + error.message);
+            }
+        }
+
+        // Auto-connect on load
+        window.onload = () => {
+            connect();
+        };
+
+        // Cleanup on page unload
+        window.onbeforeunload = () => {
+            disconnect();
+        };
+    </script>
+</body>
+</html>

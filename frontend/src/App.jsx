@@ -3,6 +3,8 @@ import IncidentList from './components/IncidentList'
 import StatsPanel from './components/StatsPanel'
 import DemoMode from './components/DemoMode'
 import Toast from './components/Toast'
+import AgentActivity from './components/AgentActivity'
+import PatternAlert from './components/PatternAlert'
 import './App.css'
 
 function App() {
@@ -74,6 +76,8 @@ function App() {
           </div>
         ) : (
           <>
+            <AgentActivity />
+            <PatternAlert />
             <StatsPanel incidents={incidents} />
             <IncidentList incidents={incidents} />
           </>

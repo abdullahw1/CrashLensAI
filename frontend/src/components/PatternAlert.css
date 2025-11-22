@@ -1,0 +1,132 @@
+.pattern-alerts {
+  margin-bottom: 24px;
+}
+
+.pattern-alert {
+  background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+  border: 2px solid #8b5cf6;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+  animation: slideDown 0.4s ease, pulse-border 2s infinite;
+  position: relative;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-border {
+  0%, 100% {
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(139, 92, 246, 0.6);
+  }
+}
+
+.pattern-icon {
+  font-size: 32px;
+  flex-shrink: 0;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.pattern-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.pattern-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pattern-badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.pattern-frequency {
+  background: rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.pattern-type {
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.pattern-endpoints {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  margin-bottom: 6px;
+  font-family: 'Courier New', monospace;
+}
+
+.pattern-endpoints strong {
+  color: white;
+  font-weight: 600;
+}
+
+.pattern-time {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+}
+
+.pattern-close {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.pattern-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
